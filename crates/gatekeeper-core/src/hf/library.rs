@@ -134,8 +134,9 @@ pub fn delete(models_dir: &Path, cfg: &Config, path: &Path) -> Result<usize, Str
         return Err("That file is not inside the models folder.".to_owned());
     }
     let library = scan(models_dir, cfg);
-    let target_str = target.to_string_lossy().replace("\\\\?\\", "");
-    let entry = library.iter().find(|f| norm(&f.path) == norm(&target_str));
+    // `models_dir` may be spelled differently from its canonical form (a short
+    // 8.3 name, a symlink, a `..` segment), so compare canonical paths.
+    let entry = library.iter().find(|f| std::fs::canonicalize(&f.path).is_ok_and(|p| p == target));
     if let Some(e) = entry
         && !e.used_by.is_empty()
     {
@@ -365,6 +366,24 @@ mod tests {
         });
         assert!(delete(dir.path(), &cfg, &draft).expect_err("in use").contains("used by m"));
         assert!(draft.exists());
+    }
+
+    #[test]
+    fn delete_refuses_a_used_file_when_the_models_folder_is_not_spelled_canonically() {
+        let dir = tempfile::tempdir().expect("dir");
+        std::fs::create_dir(dir.path().join("sub")).expect("sub");
+        // Same folder, different spelling: the scan sees `sub/..`, canonicalising does not.
+        let models_dir = dir.path().join("sub").join("..");
+        let used = models_dir.join("used.gguf");
+        std::fs::write(&used, b"x").expect("write");
+        let mut cfg = Config::default();
+        cfg.models.push(ModelConfig {
+            id: "m".into(),
+            files: ModelFiles { model: used.to_string_lossy().into(), mmproj: None, draft: None },
+            ..ModelConfig::default()
+        });
+        assert!(delete(&models_dir, &cfg, &used).expect_err("in use").contains("used by m"));
+        assert!(used.exists());
     }
 
     #[test]
