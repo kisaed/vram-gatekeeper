@@ -18,6 +18,8 @@ Requires Windows 10 (22H2) or Windows 11, x64.
 
 Point your client's OpenAI-style base URL at `http://127.0.0.1:8088/v1`; Anthropic-style requests use `/v1/messages`. The port is configurable, and the Status page shows the exact URLs and the model name to enter for each model.
 
+The installer is a pre-release build, so the [unresolved acceptance cases](#validation-status), including installation on a clean account, apply to it.
+
 ## Purpose
 
 A local LLM and a game compete for dedicated GPU memory, and closing the chat window does not necessarily unload the model. VRAM Gatekeeper provides one place to manage model lifetime, explains why inference is unavailable, and restores service afterward. It manages its own `llama-server` child processes. It cannot free memory allocated by unrelated programs, and it does not manage other LLM applications.
@@ -27,7 +29,7 @@ A local LLM and a game compete for dedicated GPU memory, and closing the chat wi
 - Local proxy for OpenAI-style and Anthropic-style llama.cpp requests, with streaming and cancellation.
 - Per-model supervision, on-demand loading, idle unloading, and configurable request-drain policies.
 - Windows PDH and DXGI memory monitoring, pressure thresholds, and game and foreground-window detection.
-- Tray host with a Svelte settings window that exists only while it is open.
+- Tray host with a Svelte settings window that is created when opened and destroyed when closed.
 - Hugging Face search, resumable checksum-verified downloads, and a local model library.
 - The full `llama-server` parameter set per model, generated from `llama-server --help` and shown with readable names.
 - Speculative decoding per model: separate draft model, EAGLE-3, DFlash, DSpark, Multi-Token Prediction, and n-gram types.
@@ -70,7 +72,7 @@ The diagram omits error recovery, manual holds, and per-model policies. See the 
 
 ## Build from source
 
-Prerequisites: a Windows x64 machine with a working GPU driver, Rust stable (MSVC target), Visual Studio C++ Build Tools with the Windows SDK, Node.js, PowerShell 7, and WebView2. Backend compatibility depends on the selected upstream llama.cpp build. A local checkout is recommended; Windows will not run freshly built programs from a network drive.
+Prerequisites: a Windows x64 machine with a working GPU driver, Rust stable (MSVC target), Visual Studio C++ Build Tools with the Windows SDK, Node.js, PowerShell 7, and WebView2. Backend compatibility depends on the selected upstream llama.cpp build. Windows will not run freshly built programs from a network drive, so keep the cargo target directory on a local disk: use a local checkout, or set `CARGO_TARGET_DIR` to a local folder (`tools/build.ps1` defaults to `%USERPROFILE%\cargo-target\vram-gatekeeper`).
 
 From the repository root:
 
@@ -128,7 +130,7 @@ pwsh tools/ui.ps1 check
 pwsh tools/ui.ps1 lint
 ```
 
-Tests that use the real engine or the live network are opt-in and are skipped when their environment variables are not set, so check the test summary before treating a run as hardware validation. The CI workflow runs formatting, core and fixture tests, and the UI checks; it does not install the application, download models, run games, or exercise GPU hardware.
+Tests that use the real engine or the live network are opt-in and are skipped when their environment variables are not set, so check the test summary before treating a run as hardware validation. The CI workflow (`.github/workflows/checks.yml`) runs formatting, core and fixture tests, and the UI type check, lint, and production build; it does not install the application, download models, run games, or exercise GPU hardware.
 
 ## Network and downloads
 
