@@ -2,48 +2,39 @@
 
 **GPU-memory coordination for local LLMs and games on Windows.**
 
-A Windows background application between AI clients and [llama.cpp](https://github.com/ggml-org/llama.cpp). It coordinates model loading, request admission, and GPU-memory pressure. When a configured game or pressure condition closes the gate, it can drain requests and unload managed models, then reload on demand afterward.
+VRAM Gatekeeper is a background application that sits between AI clients and [llama.cpp](https://github.com/ggml-org/llama.cpp). It coordinates model loading, request admission, and GPU-memory pressure. When a configured game starts or VRAM runs short, it drains in-flight requests, unloads the managed models, and reloads them on demand once the condition clears.
 
-**Experimental alpha (v0.1.0).** A Windows installer is published on the [Releases page](../../releases) as a pre-release; it has not yet been verified on a clean machine. Hardware/game compatibility remains under validation. This is an independent project, not an official llama.cpp, NVIDIA, or game-platform product.
+**Status: experimental alpha (v0.1.0).** A Windows installer is available as a pre-release on the [Releases page](../../releases). It has not yet been verified on a clean machine, and hardware and game compatibility are still under validation. VRAM Gatekeeper is an independent project and is not affiliated with llama.cpp, NVIDIA, or any game platform.
 
-[Install](#install) · [Features](#features) · [Architecture](#architecture) · [Build from source](#build-from-source) · [Validation](#validation-status) · [License](#license)
+[Install](#install) · [Features](#features) · [Architecture](#architecture) · [Build from source](#build-from-source) · [Validation](#validation-status) · [Contributors](#contributors) · [License](#license)
 
 ## Install
 
 Requires Windows 10 (22H2) or Windows 11, x64.
 
 1. Download `VRAM Gatekeeper_<version>_x64-setup.exe` from the [latest release](../../releases/latest) and compare its SHA-256 with the value in the release notes. The file is about 534 MiB because it bundles two llama.cpp engines (CUDA and Vulkan).
-2. Run it. It installs for the current user only: no administrator rights, no Visual C++ redistributable and no separate llama.cpp download are needed. WebView2 is installed if Windows lacks it.
-3. Start **VRAM Gatekeeper**. It runs in the system tray; open the settings window from the tray icon. A discrete NVIDIA GPU uses the CUDA engine, other GPUs the Vulkan engine.
+2. Run the installer. It installs for the current user only and needs no administrator rights, no Visual C++ redistributable, and no separate llama.cpp download. WebView2 is installed if Windows does not already have it.
+3. Start **VRAM Gatekeeper**. It runs in the system tray; open the settings window from the tray icon. A discrete NVIDIA GPU uses the CUDA engine, and other GPUs use the Vulkan engine.
 
-Point a client's OpenAI-style base URL at `http://127.0.0.1:8088/v1` (Anthropic-style requests use `/v1/messages`). The port is configurable, and the Status page shows the exact URLs and the model name to enter for each model.
-
-The installer is a pre-release build. The unresolved acceptance cases under [Validation status](#validation-status) apply to it.
+Point your client's OpenAI-style base URL at `http://127.0.0.1:8088/v1`; Anthropic-style requests use `/v1/messages`. The port is configurable, and the Status page shows the exact URLs and the model name to enter for each model.
 
 ## Purpose
 
-A local LLM and a game compete for dedicated GPU memory. Closing the chat window does not necessarily unload the model. Gatekeeper provides one place to manage model lifetime, explain why inference is unavailable, and restore service afterward. It manages its own `llama-server` child processes; it cannot promise to free memory allocated by unrelated programs or manage every LLM application.
+A local LLM and a game compete for dedicated GPU memory, and closing the chat window does not necessarily unload the model. VRAM Gatekeeper provides one place to manage model lifetime, explains why inference is unavailable, and restores service afterward. It manages its own `llama-server` child processes. It cannot free memory allocated by unrelated programs, and it does not manage other LLM applications.
 
 ## Features
 
-- Local proxy for supported OpenAI-style and Anthropic-style llama.cpp requests, including streaming/cancellation.
+- Local proxy for OpenAI-style and Anthropic-style llama.cpp requests, with streaming and cancellation.
 - Per-model supervision, on-demand loading, idle unloading, and configurable request-drain policies.
-- Windows PDH/DXGI memory monitoring, pressure thresholds, and game/foreground detection.
-- Tauri tray host with a Svelte settings window created when opened and destroyed when closed.
-- Hugging Face browsing, resumable downloads, and a local model library.
-- CUDA/Vulkan engine selection and official llama.cpp engine updates with checksum verification, with rollback to the bundled engine.
-- The full `llama-server` parameter set per model, shown with readable names and generated from `llama-server --help`.
-- Speculative decoding per model: separate draft model, EAGLE-3, DFlash, DSpark, Multi-Token Prediction and n-gram types.
-- Per-user NSIS installer that bundles the CUDA and Vulkan engines.
-- Fake-server, fixture, property, unit, and opt-in real-engine tests.
+- Windows PDH and DXGI memory monitoring, pressure thresholds, and game and foreground-window detection.
+- Tray host with a Svelte settings window that exists only while it is open.
+- Hugging Face search, resumable checksum-verified downloads, and a local model library.
+- The full `llama-server` parameter set per model, generated from `llama-server --help` and shown with readable names.
+- Speculative decoding per model: separate draft model, EAGLE-3, DFlash, DSpark, Multi-Token Prediction, and n-gram types.
+- CUDA and Vulkan engine selection, and official llama.cpp engine updates with SHA-256 verification and rollback to the bundled engine.
+- Per-user NSIS installer that bundles both engines.
 
 Hardware acceptance coverage is tracked in the [manual test matrix](docs/testing/manual-test-matrix.md).
-
-## AI-assisted development
-
-Most of the implementation was generated with AI assistance. The application has been used and manually tested daily on one development setup; a comprehensive review of the generated code has not been completed. The [validation record](docs/PUBLICATION_CHECKS.md) identifies the automated checks performed and the acceptance work that remains.
-
-Design/status documents and captured test output record development history; they are not a substitute for independently rerunning tests. Contributions that simplify the implementation, improve correctness, and reproduce real hardware/game behavior are especially welcome.
 
 ## Architecture
 
@@ -60,7 +51,7 @@ flowchart LR
     HF["Hugging Face downloads"] --> Models
 ```
 
-The gate decides whether a request may proceed. The supervisor owns engine processes; the proxy tracks in-flight work so unloading follows the selected drain policy.
+The gate decides whether a request may proceed. The supervisor owns the engine processes, and the proxy tracks in-flight work so that unloading follows the selected drain policy.
 
 ```mermaid
 stateDiagram-v2
@@ -75,11 +66,11 @@ stateDiagram-v2
     Loading --> Unloaded: load failure
 ```
 
-This diagram simplifies error recovery, manual holds, and per-model policies. See the [design](docs/spec.md) and [architecture decisions](docs/adr/).
+The diagram omits error recovery, manual holds, and per-model policies. See the [design specification](docs/spec.md) and the [architecture decision records](docs/adr/).
 
 ## Build from source
 
-A **local Windows x64 checkout** is simplest. Prerequisites: a working GPU driver, Rust stable/MSVC target, Visual Studio C++ Build Tools and Windows SDK, Node.js, PowerShell 7, and WebView2 for the desktop UI. Backend compatibility depends on the selected upstream llama.cpp build.
+Prerequisites: a Windows x64 machine with a working GPU driver, Rust stable (MSVC target), Visual Studio C++ Build Tools with the Windows SDK, Node.js, PowerShell 7, and WebView2. Backend compatibility depends on the selected upstream llama.cpp build. A local checkout is recommended; Windows will not run freshly built programs from a network drive.
 
 From the repository root:
 
@@ -91,9 +82,9 @@ $env:GATEKEEPER_BUNDLED_ENGINES = Join-Path $PWD 'app/src-tauri/resources/engine
 cargo run --locked -p vram-gatekeeper
 ```
 
-The fetch script downloads pinned upstream assets from [engine-rules.json](tools/engine-rules.json); CUDA assets can be large. The git repository contains no engines, model weights, or installers; installers are attached to GitHub releases instead. Review third-party terms before redistributing a bundle.
+The fetch script downloads the pinned upstream assets listed in [engine-rules.json](tools/engine-rules.json); the CUDA assets are large. The repository contains no engines, model weights, or installers; installers are attached to GitHub releases. Review the third-party terms before redistributing a bundle.
 
-For development alongside an existing installation, isolate local settings:
+To develop alongside an existing installation, isolate the settings and data folders:
 
 ```powershell
 $env:GATEKEEPER_CONFIG_DIR = Join-Path $PWD '.local-config'
@@ -101,26 +92,31 @@ $env:GATEKEEPER_DATA_DIR = Join-Path $PWD '.local-data'
 cargo run --locked -p vram-gatekeeper
 ```
 
-Open settings from the tray, add a model, select a compatible engine, and configure game/pressure behavior. Point a compatible client's OpenAI-style base URL at `http://127.0.0.1:8088/v1` and use the configured model ID. A request may trigger a cold model load. The headless runner exposes the same core:
+Open the settings window from the tray, add a model, select a compatible engine, and configure the game and pressure behavior. A request may trigger a cold model load. The headless runner exposes the same core:
 
 ```powershell
 cargo run --locked -p gatekeeper-cli -- --help
 ```
 
-Developers can package an NSIS installer with `cargo install tauri-cli --version "^2" --locked` followed by `pwsh tools/build.ps1`. That script fetches missing engines and creates a new numbered output under `builds/<version>-build.<NNNN>/` (git-ignored; old builds are kept). Keep the cargo target directory on a local disk (`CARGO_TARGET_DIR`), because Windows will not run freshly built programs from a network drive. Clean-machine installation still requires its own validation.
+### Building the installer
+
+```powershell
+cargo install tauri-cli --version "^2" --locked   # once
+pwsh tools/build.ps1
+```
+
+The script fetches any missing engines and writes the installer and a `manifest.json` to a new folder, `builds/<version>-build.<NNNN>/`. The `builds/` folder is git-ignored and earlier builds are kept. Set `CARGO_TARGET_DIR` to a folder on a local disk if the repository is on a network drive.
 
 ## Validation status
 
-See the [dated public-source check results](docs/PUBLICATION_CHECKS.md) for the checks actually rerun on this publication copy.
+The checks that were rerun for the published source are recorded in [`docs/PUBLICATION_CHECKS.md`](docs/PUBLICATION_CHECKS.md). The project has been used daily on a single development setup, which is not a compatibility guarantee. [Phase 0 findings](docs/phase0-findings.md), [implementation status](docs/IMPLEMENTATION_STATUS.md), and the [manual test matrix](docs/testing/manual-test-matrix.md) distinguish recorded evidence from remaining work.
 
-Daily use is one setup's experience, not a compatibility guarantee. [Historical findings](docs/phase0-findings.md), [implementation tracking](docs/IMPLEMENTATION_STATUS.md), and the [manual matrix](docs/testing/manual-test-matrix.md) distinguish prior evidence from remaining work. Unresolved acceptance cases include:
+Unresolved acceptance cases:
 
-- Real Steam/non-Steam, full-screen, and borderless games. Recorded detection used a renamed test process rather than a real game.
-- Oversized models and real NVIDIA shared-memory fallback/pressure.
-- AMD/Intel Vulkan hardware, multi-model contention, sleep/resume, and second-machine LAN behavior.
-- Clean-account installation/uninstallation and the full 24-hour soak.
-
-Real-engine and live-network tests are opt-in and may skip when their environment variables are unavailable. Review the test summary before interpreting a run as hardware or network validation.
+- Real Steam, non-Steam, full-screen, and borderless games. Recorded detection used a renamed test process rather than a real game.
+- Oversized models and real NVIDIA shared-memory fallback and pressure.
+- AMD and Intel Vulkan hardware, multi-model contention, sleep and resume, and LAN use from a second machine.
+- Installation and uninstallation on a clean account, and a full 24-hour soak.
 
 Checks that do not load a model:
 
@@ -132,26 +128,35 @@ pwsh tools/ui.ps1 check
 pwsh tools/ui.ps1 lint
 ```
 
-The included CI workflow is configured to run formatting, core/fixture tests, and UI checks. It does not install the application, download models, run games, or validate GPU hardware.
+Tests that use the real engine or the live network are opt-in and are skipped when their environment variables are not set, so check the test summary before treating a run as hardware validation. The CI workflow runs formatting, core and fixture tests, and the UI checks; it does not install the application, download models, run games, or exercise GPU hardware.
 
 ## Network and downloads
 
-The proxy binds to loopback by default. Optional LAN mode should be configured deliberately with authentication and has not been fully validated from a second machine. Keep private settings, tokens, diagnostic exports, and models out of Git.
+The proxy binds to loopback by default and rejects browser requests from origins that are not explicitly approved. LAN mode is optional; enable it deliberately and with authentication, as it has not been fully validated from a second machine. Keep private settings, tokens, diagnostic exports, and models out of version control.
 
-The engine updater restricts install plans to official llama.cpp release-download URLs, requires published SHA-256 digests, verifies downloaded files, and rejects archive paths escaping extraction. These are implemented safeguards, not a complete security audit. Hugging Face access and model licenses are separate.
+The engine updater accepts only official llama.cpp release-download URLs, requires published SHA-256 digests, verifies every downloaded file, and rejects archive paths that escape the extraction folder. These safeguards are not a complete security audit. Hugging Face access and model licenses are separate matters.
 
-## Source map
+## Repository layout
 
 | Path | Purpose |
 |---|---|
-| `crates/gatekeeper-core` | Lifecycle, monitoring, proxy, downloads, configuration |
+| `crates/gatekeeper-core` | Lifecycle, monitoring, proxy, downloads, and configuration |
 | `crates/gatekeeper-cli` | Headless runner |
-| `app/src-tauri` | Tray host and command bridge |
-| `app/ui` | Svelte interface |
-| `tools/fake-llama-server` | Process/proxy test double |
-| `tools/` | Engine fetching, UI tooling, icons, packaging |
-| `docs/` | Design, decisions, historical findings, manual matrix |
+| `app/src-tauri` | Tauri v2 tray host, command bridge, and installer configuration |
+| `app/ui` | Svelte 5 settings interface |
+| `tools/fake-llama-server` | Process and proxy test double |
+| `tools/` | Engine fetching, installer build, UI tooling, and icon generation |
+| `docs/` | Design specification, decision records, status, and manual test matrix |
+
+See also [`CHANGELOG.md`](CHANGELOG.md).
+
+## Contributors
+
+- **Ziqian (Kevin) Xu** ([@kisaed](https://github.com/kisaed)): author and maintainer.
+- **Claude** ([Anthropic](https://www.anthropic.com/claude)): design, implementation, testing, and documentation.
+
+Contributions that simplify the implementation, improve correctness, or reproduce real hardware and game behavior are welcome.
 
 ## License
 
-Original application source is under the [MIT License](LICENSE). Dependencies, engines/runtimes, and downloaded models retain their own licenses. See [third-party notices](app/src-tauri/resources/THIRD_PARTY_NOTICES.txt); the repository contains no engine/runtime binaries, but the release installer bundles llama.cpp (MIT), its libomp runtime and the NVIDIA CUDA runtime libraries under the terms listed there.
+The application source is released under the [MIT License](LICENSE). Dependencies, engines and runtimes, and downloaded models retain their own licenses; see the [third-party notices](app/src-tauri/resources/THIRD_PARTY_NOTICES.txt). The repository contains no engine or runtime binaries, but the release installer bundles llama.cpp (MIT), its libomp runtime, and the NVIDIA CUDA runtime libraries under the terms listed there.
