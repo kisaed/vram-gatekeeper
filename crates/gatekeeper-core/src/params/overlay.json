@@ -1,0 +1,27 @@
+{
+  "reserved": [
+    "host", "port", "api-key", "api-key-file", "models-dir", "models-preset",
+    "models-max", "sleep-idle-seconds", "ssl-key-file", "ssl-cert-file", "path",
+    "log-file", "log-disable", "log-colors", "log-prefix", "log-timestamps",
+    "model", "mmproj", "spec-draft-model", "md", "model-draft", "help", "usage", "version", "list-devices", "completion-bash",
+    "hf-repo", "hf-file", "hf-token", "model-url", "docker-repo",
+    "h", "m", "mm", "mu", "dr", "hf", "hfr", "hff", "hft", "no-log-prefix", "no-log-timestamps"
+  ],
+  "float_keys": [
+    "temp", "top-p", "min-p", "top-k-ratio", "typical", "repeat-penalty",
+    "presence-penalty", "frequency-penalty", "dynatemp-range", "dynatemp-exp",
+    "xtc-probability", "xtc-threshold", "mirostat-lr", "mirostat-ent",
+    "rope-scale", "rope-freq-base", "rope-freq-scale", "yarn-ext-factor",
+    "yarn-attn-factor", "yarn-beta-slow", "yarn-beta-fast", "dry-multiplier",
+    "dry-base", "defrag-thold", "cache-reuse-ratio"
+  ],
+  "basic_keys": [
+    "ctx-size", "gpu-layers", "n-gpu-layers", "flash-attn", "threads", "threads-batch",
+    "batch-size", "ubatch-size", "parallel", "cache-type-k", "cache-type-v",
+    "jinja", "temp", "top-p", "top-k", "min-p", "repeat-penalty", "seed",
+    "n-predict", "chat-template", "reasoning-format", "mlock", "mmap",
+    "cont-batching", "device", "split-mode", "main-gpu", "tensor-split",
+    "fit", "embeddings", "rerank", "pooling", "lora", "rope-scaling", "rope-scale",
+    "kv-offload", "cache-reuse", "slot-save-path", "no-webui", "webui"
+  ]
+}

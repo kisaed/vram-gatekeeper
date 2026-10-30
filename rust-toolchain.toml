@@ -1,0 +1,5 @@
+[toolchain]
+# Edition 2024 needs Rust 1.85 or later; "stable" tracks the latest release.
+channel = "stable"
+components = ["rustfmt", "clippy"]
+targets = ["x86_64-pc-windows-msvc"]

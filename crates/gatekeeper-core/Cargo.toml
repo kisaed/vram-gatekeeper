@@ -1,0 +1,47 @@
+[package]
+name = "gatekeeper-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+async-trait = "0.1.92"
+axum = "0.8.9"
+bytes = "1.12.1"
+futures-util = "0.3.34"
+hex = "0.4.3"
+http = "1.5.0"
+http-body = "1.1.0"
+http-body-util = "0.1.5"
+hyper = { version = "1.12.0", features = ["client", "http1", "server"] }
+hyper-util = { version = "0.1.21", features = ["client-legacy", "http1", "tokio", "server"] }
+notify = "8.2.0"
+notify-debouncer-mini = "0.7.0"
+pin-project-lite = "0.2.17"
+rand = "0.10.3"
+reqwest = { version = "0.13.5", default-features = false, features = ["rustls", "stream", "json"] }
+schemars = "1.2.3"
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.154"
+sha2 = "0.11.1"
+subtle = "2.6.1"
+thiserror = "2.0.21"
+tokio = { version = "1.54.1", features = ["rt-multi-thread", "macros", "sync", "time", "net", "fs", "io-util", "process"] }
+tokio-util = "0.7.20"
+tracing = "0.1.44"
+tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
+uuid = { version = "1.28.0", features = ["v4"] }
+zip = "9.0.5"
+
+[lints]
+workspace = true
+
+[dev-dependencies]
+proptest = "1.12.0"
+tempfile = "3.27.0"
+tokio = { version = "1.54.1", features = ["test-util", "rt", "macros"] }
+tower = { version = "0.5.3", features = ["util"] }
+
+[target."cfg(windows)".dependencies]
+windows = { version = "0.62.2", features = ["Win32_Foundation", "Win32_System_JobObjects", "Win32_System_Threading", "Win32_System_Diagnostics_ToolHelp", "Win32_System_Performance", "Win32_Graphics_Dxgi", "Win32_Graphics_Direct3D12", "Win32_Graphics_Direct3D", "Win32_UI_Accessibility", "Win32_UI_WindowsAndMessaging", "Win32_UI_Shell", "Win32_System_Registry", "Win32_Security", "Win32_Security_Credentials", "Win32_Storage_FileSystem", "Win32_System_Console", "Win32_System_SystemInformation", "Win32_System_Power"] }

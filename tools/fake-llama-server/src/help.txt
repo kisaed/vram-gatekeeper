@@ -1,0 +1,92 @@
+----- common params -----
+
+-h,    --help, --usage                  print usage and exit
+--version                               show version and build info
+-t,    --threads N                      number of CPU threads to use during generation (default: -1)
+                                        (env: LLAMA_ARG_THREADS)
+-tb,   --threads-batch N                number of threads to use during batch and prompt processing (default:
+                                        same as --threads)
+-c,    --ctx-size N                     size of the prompt context (default: 0, 0 = loaded from model)
+                                        (env: LLAMA_ARG_CTX_SIZE)
+-n,    --predict, --n-predict N         number of tokens to predict (default: -1, -1 = infinity)
+                                        (env: LLAMA_ARG_N_PREDICT)
+-b,    --batch-size N                   logical maximum batch size (default: 2048)
+                                        (env: LLAMA_ARG_BATCH)
+-ub,   --ubatch-size N                  physical maximum batch size (default: 512)
+                                        (env: LLAMA_ARG_UBATCH)
+-fa,   --flash-attn [on|off|auto]       set Flash Attention use ('on', 'off', or 'auto', default: 'auto')
+                                        (env: LLAMA_ARG_FLASH_ATTN)
+--mlock                                 force system to keep model in RAM rather than swapping or compressing
+                                        (env: LLAMA_ARG_MLOCK)
+--mmap, --no-mmap                       whether to memory-map model (if disabled, slower load but may reduce
+                                        pageouts if not using mlock) (default: enabled)
+                                        (env: LLAMA_ARG_MMAP)
+-ctk,  --cache-type-k TYPE              KV cache data type for K
+                                        allowed values: f32, f16, bf16, q8_0, q4_0, q4_1, iq4_nl, q5_0, q5_1
+                                        (default: f16)
+                                        (env: LLAMA_ARG_CACHE_TYPE_K)
+-ctv,  --cache-type-v TYPE              KV cache data type for V
+                                        allowed values: f32, f16, bf16, q8_0, q4_0, q4_1, iq4_nl, q5_0, q5_1
+                                        (default: f16)
+                                        (env: LLAMA_ARG_CACHE_TYPE_V)
+-dev,  --device <dev1,dev2,..>          comma-separated list of devices to use for offloading
+                                        (env: LLAMA_ARG_DEVICE)
+-ngl,  --gpu-layers, --n-gpu-layers N   max. number of layers to store in VRAM, either an exact number,
+                                        'auto', or 'all' (default: auto)
+                                        (env: LLAMA_ARG_N_GPU_LAYERS)
+-sm,   --split-mode {none,layer,row}    how to split the model across multiple GPUs, one of:
+                                        - none: use one GPU only
+                                        - layer (default): split layers and KV across GPUs
+                                        - row: split rows across GPUs
+                                        (env: LLAMA_ARG_SPLIT_MODE)
+-ts,   --tensor-split N0,N1,N2,...      fraction of the model to offload to each GPU, comma-separated list of
+                                        proportions, e.g. 3,1
+                                        (env: LLAMA_ARG_TENSOR_SPLIT)
+-mg,   --main-gpu INDEX                 the GPU to use for the model (with split-mode = none) (default: 0)
+                                        (env: LLAMA_ARG_MAIN_GPU)
+--rope-scale N                          RoPE context scaling factor, expands context by a factor of N
+                                        (env: LLAMA_ARG_ROPE_SCALE)
+--rope-freq-base N                      RoPE base frequency, used by NTK-aware scaling (default: loaded from
+                                        model)
+                                        (env: LLAMA_ARG_ROPE_FREQ_BASE)
+--lora FNAME                            path to LoRA adapter (can be repeated to use multiple adapters)
+-m,    --model FNAME                    model path (default: `models/$filename` with filename from `--hf-file`
+                                        or `--model-url` if set, otherwise models/7B/ggml-model-f16.gguf)
+                                        (env: LLAMA_ARG_MODEL)
+--jinja, --no-jinja                     use jinja template for chat (default: disabled)
+                                        (env: LLAMA_ARG_JINJA)
+--chat-template JINJA_TEMPLATE          set custom jinja chat template (default: template taken from model's
+                                        metadata)
+                                        (env: LLAMA_ARG_CHAT_TEMPLATE)
+
+----- sampling params -----
+
+--temp N                                temperature (default: 0.8)
+--top-k N                               top-k sampling (default: 40, 0 = disabled)
+                                        (env: LLAMA_ARG_TOP_K)
+--top-p N                               top-p sampling (default: 0.9, 1.0 = disabled)
+--min-p N                               min-p sampling (default: 0.1, 0.0 = disabled)
+--repeat-penalty N                      penalize repeat sequence of tokens (default: 1.0, 1.0 = disabled)
+-s,    --seed SEED                      RNG seed (default: -1, use random seed for -1)
+
+----- example-specific params -----
+
+--host HOST                             ip address to listen on, or bind to an UNIX socket if the address ends
+                                        with .sock (default: 127.0.0.1)
+                                        (env: LLAMA_ARG_HOST)
+--port PORT                             port to listen (default: 8080)
+                                        (env: LLAMA_ARG_PORT)
+--api-key KEY                           API key to use for authentication (default: none)
+                                        (env: LLAMA_API_KEY)
+-np,   --parallel N                     number of server slots (default: -1, -1 = auto)
+                                        (env: LLAMA_ARG_N_PARALLEL)
+-cb,   --cont-batching, -nocb, --no-cont-batching
+                                        whether to enable continuous batching (a.k.a dynamic batching) (default: enabled)
+                                        (env: LLAMA_ARG_CONT_BATCHING)
+--webui, --no-webui                     whether to enable the Web UI (default: enabled)
+                                        (env: LLAMA_ARG_WEBUI)
+--embeddings                            restrict to only support embedding use case
+                                        (env: LLAMA_ARG_EMBEDDINGS)
+--reasoning-format FORMAT               controls whether thought tags are allowed and/or extracted from the
+                                        response (default: auto)
+                                        (env: LLAMA_ARG_THINK)

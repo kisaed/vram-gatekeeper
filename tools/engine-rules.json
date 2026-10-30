@@ -1,0 +1,41 @@
+{
+  "_comment": "Pinned llama.cpp release bundled into the installer (ADR-0011). Asset names change between releases (spec F11), so they are patterns: {tag} is replaced by `tag`. Update with `fetch-engine.ps1 -UpdatePins -Tag <newtag>`, then re-capture the --help and log fixtures and run the full test suite.",
+  "repo": "ggml-org/llama.cpp",
+  "tag": "b11804",
+  "engines": [
+    {
+      "id": "vulkan",
+      "label": "Vulkan (NVIDIA, AMD, Intel)",
+      "files": [
+        {
+          "name": "llama-{tag}-bin-win-vulkan-x64.zip",
+          "sha256": "db9ab31997e93bf713d3dfec6eb1cf1b5a6a5f2940a3d4d111ad0ffab54c87d5"
+        }
+      ]
+    },
+    {
+      "id": "cuda",
+      "label": "CUDA 13.4 (NVIDIA)",
+      "files": [
+        {
+          "name": "llama-{tag}-bin-win-cuda-13.4-x64.zip",
+          "sha256": "99505c040fb83da89c19c3e11a312060e20e418be4034ff39a5f2b719d33324d"
+        },
+        {
+          "name": "cudart-llama-bin-win-cuda-13.4-x64.zip",
+          "sha256": "738f8c251ac22b70c3ae6f83a10cf222725df0395246a2cf58f32bdb85fbe668"
+        }
+      ]
+    },
+    {
+      "id": "cpu",
+      "label": "CPU only",
+      "files": [
+        {
+          "name": "llama-{tag}-bin-win-cpu-x64.zip",
+          "sha256": "3a3e417a0816329829081bdd443e3045ff3b2dbe866fcef89a1d919e941ce23f"
+        }
+      ]
+    }
+  ]
+}

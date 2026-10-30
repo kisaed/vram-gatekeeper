@@ -1,0 +1,31 @@
+This source-only repository does not contain bundled engines or runtimes. Binary builds may include the components listed below; their own terms and full notices must be reviewed for the actual distribution.
+
+VRAM Gatekeeper bundles the following third-party software. Each keeps its own licence.
+
+llama.cpp (llama-server and the ggml libraries)
+  Source:  https://github.com/ggml-org/llama.cpp
+  Licence: MIT. Copyright (c) the ggml authors.
+  Shipped in the "engine" folder, one subfolder per backend (vulkan, cuda).
+
+LLVM OpenMP runtime (libomp.dll)
+  Source:  https://openmp.llvm.org/
+  Licence: Apache License 2.0 with LLVM exceptions. See "LICENSE-LLVM-OpenMP" in each engine folder.
+
+NVIDIA CUDA runtime libraries (cudart, cuBLAS; "cuda" engine folder only)
+  Source:  https://developer.nvidia.com/cuda-downloads
+  Licence: NVIDIA CUDA Toolkit End User License Agreement, which allows redistributing these
+           runtime libraries with an application.
+
+Tauri and the Rust crates linked into the application
+  Source:  https://tauri.app/ and https://crates.io/
+  Licence: MIT or Apache License 2.0 for Tauri and nearly all crates; the exact list for this
+           build is produced with `cargo deny list`.
+
+Microsoft Edge WebView2 Runtime bootstrapper
+  Source:  https://developer.microsoft.com/microsoft-edge/webview2/
+  Licence: Microsoft WebView2 Runtime licence terms. The installer downloads the runtime only
+           when Windows does not already have it.
+
+Models you download are separate works with their own licences. The Download page links each
+model's page on huggingface.co so you can read its licence before you use it.
+

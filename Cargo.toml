@@ -1,0 +1,46 @@
+# Workspace definition for VRAM Gatekeeper (spec §6).
+#
+# Dependencies are added with `cargo add` so versions resolve to the latest
+# stable release at build time (spec §24); they are pinned in Cargo.lock.
+# The Tauri host crate (app/src-tauri) joins the workspace in Phase 3.
+[workspace]
+resolver = "3"
+members = [
+    "crates/gatekeeper-core",
+    "crates/gatekeeper-cli",
+    "tools/fake-llama-server",
+    "app/src-tauri",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+publish = false
+
+# Lints from spec §23.1 item 9. CI runs clippy with `-D warnings`, so every
+# "warn" below is effectively an error there.
+[workspace.lints.rust]
+# Unsafe code is quarantined in `platform/windows/` (spec §23.1 item 10);
+# that module opts back in with `#![allow(unsafe_code)]`.
+unsafe_code = "deny"
+missing_docs = "warn"
+
+[workspace.lints.clippy]
+undocumented_unsafe_blocks = "deny"
+missing_errors_doc = "warn"
+missing_panics_doc = "warn"
+unwrap_used = "warn"
+# axum responses are large by design; boxing them everywhere adds noise.
+result_large_err = "allow"
+# Tests build configs by assigning to a default; clearer than struct update.
+field_reassign_with_default = "allow"
+
+# Release profile from spec §25.2. `panic = "unwind"` so panics in command
+# handlers can be caught and logged instead of aborting the whole process.
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+panic = "unwind"
+strip = "symbols"

@@ -1,0 +1,16 @@
+0.23.325.867 I srv  llama_server: initializing ...
+0.23.325.874 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+0.23.343.739 I srv    load_model: loading model 'models/qwen2.5-0.5b-q4.gguf'
+0.23.598.781 W load: control-looking token: 128247 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.23.779.317 I cmn          init: llama threadpool init, n_threads = 16
+0.23.829.536 I srv    load_model: initializing, n_slots = 4, n_ctx_slot = 2048, kv_unified = 'true'
+0.23.833.573 I srv  llama_server: model loaded
+0.23.833.580 I srv  llama_server: listening on htt<local-engine-path>
+0.23.968.490 I slot get_availabl: id  0 | task -1 | selected slot by LRU, n_tokens = 0, t_last = -1
+0.23.968.524 I slot launch_slot_: id  0 | task 0 | processing task, is_child = 0
+0.24.010.358 I slot print_timing: id  0 | task 0 | prompt eval time =      28.07 ms /    31 tokens (    0.91 ms per token,  1104.58 tokens per second)
+0.24.010.363 I slot print_timing: id  0 | task 0 |        eval time =      13.75 ms /     8 tokens (    1.96 ms per token,   509.24 tokens per second)
+0.24.010.364 I slot print_timing: id  0 | task 0 |       total time =      41.81 ms /    39 tokens
+0.24.010.365 I slot print_timing: id  0 | task 0 |    graphs reused =          7
+0.24.010.366 I slot print_timing: id  0 | task 0 |   graph reallocs =          0    /     0        (same size) / (changed size)
+0.24.010.380 I slot      release: id  0 | task 0 | stop processing: n_tokens = 38, truncated = 0

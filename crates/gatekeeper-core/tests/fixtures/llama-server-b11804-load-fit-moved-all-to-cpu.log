@@ -1,0 +1,362 @@
+0.00.002.687 I srv  llama_server: initializing ...
+0.00.107.923 I ggml_cuda_init: found 1 CUDA devices (Total VRAM: 32579 MiB):
+0.00.108.044 I   Device 0: NVIDIA GeForce RTX 5090, compute capability 12.0, VMM: yes, VRAM: 32579 MiB
+0.00.108.073 I load_backend: loaded CUDA backend from <local-engine-path>
+0.00.109.571 I load_backend: loaded RPC backend from <local-engine-path>
+0.00.122.358 I load_backend: loaded CPU backend from <local-engine-path>
+0.00.122.409 I cmn  common_param: common_params_print_info: build 11804 (c7fc50941) with Clang 20.1.8 for Windows x86_64
+0.00.122.409 I cmn  common_param: common_params_print_info: verbosity = 4 (adjust with the `-lv N` CLI arg)
+0.00.122.411 I cmn  common_param: device_info:
+0.00.173.975 I cmn  common_param:   - CUDA0   : NVIDIA GeForce RTX 5090 (32579 MiB, 30991 MiB free)
+0.00.173.987 I cmn  common_param:   - CPU     : AMD Ryzen 9 9950X3D 16-Core Processor           (95337 MiB, 62267 MiB free)
+0.00.174.044 I cmn  common_param: system_info: n_threads = 16 (n_threads_batch = 16) / 32 | CUDA : ARCHS = 750,800,860,890,900,1200,1210 | USE_GRAPHS = 1 | FA_QUANTS = q4_0-q4_0,q8_0-q8_0,f16-f16,bf16-bf16 | BLACKWELL_NATIVE_FP4 = 1 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | AVX512 = 1 | AVX512_VBMI = 1 | AVX512_VNNI = 1 | AVX512_BF16 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+0.00.174.047 I srv  llama_server: n_parallel is set to auto, using n_parallel = 4 and kv_unified = true
+0.00.174.112 I srv  init_listene: running without SSL
+0.00.174.125 I srv  init_listene: api_keys: ****k
+0.00.174.281 I srv          init: using 31 threads for HTTP server
+0.00.187.937 I srv    load_model: loading model 'models/qwen2.5-0.5b-q4.gguf'
+0.00.187.941 I srv    load_model: local path 'models/qwen2.5-0.5b-q4.gguf'
+0.00.187.951 I cmn  common_init_: fitting params to device memory ...
+0.00.187.952 I cmn  common_init_: (for bugs during this step try to reproduce them with -fit off, or provide --verbose logs if the bug only occurs with -fit on)
+0.00.187.978 I common_params_fit_impl: getting device memory data for initial parameters:
+0.00.295.616 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.00.295.621 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 435 =   373 +      24 +      37) +        1153 |
+0.00.295.621 I common_memory_breakdown_print: |   - Host               |                    98 =    89 +       0 +       9                |
+0.00.314.170 I common_params_fit_impl: projected to use 435 MiB of device memory vs. 30991 MiB of free device memory
+0.00.314.175 I common_params_fit_impl: cannot meet free memory target of 31000 MiB, need to reduce device memory by 444 MiB
+0.00.314.176 I common_params_fit_impl: context size set by user to 2048 -> no change
+0.00.314.178 I common_params_fit_impl: id=0, target=-9 MiB
+0.00.419.067 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.00.419.072 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + (  41 =     0 +       0 +      41) +        1547 |
+0.00.419.073 I common_memory_breakdown_print: |   - Host               |                   495 =   462 +      24 +       9                |
+0.00.437.464 I common_params_fit_impl: memory for test allocation by device:
+0.00.437.469 I common_params_fit_impl: id=0, n_layer= 0, n_part= 0, overflow_type=4, mem=    41 MiB
+0.00.437.470 I common_params_fit_impl: filling dense layers back-to-front:
+0.00.540.226 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.00.540.231 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 435 =   373 +      24 +      37) +        1153 |
+0.00.540.232 I common_memory_breakdown_print: |   - Host               |                    98 =    89 +       0 +       9                |
+0.00.561.663 I common_params_fit_impl: memory for test allocation by device:
+0.00.561.669 I common_params_fit_impl: id=0, n_layer=25, n_part= 0, overflow_type=4, mem=   435 MiB
+0.00.561.674 I common_params_fit_impl: start filling device 0, delta=25
+0.00.667.189 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.00.667.195 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 427 =   363 +      23 +      41) +        1161 |
+0.00.667.195 I common_memory_breakdown_print: |   - Host               |                   109 =    99 +       1 +       9                |
+0.00.687.599 I common_params_fit_impl: memory for test allocation by device:
+0.00.687.605 I common_params_fit_impl: id=0, n_layer=24, n_part= 0, overflow_type=4, mem=   427 MiB
+0.00.687.642 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=24
+0.00.794.672 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.00.794.678 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 415 =   352 +      22 +      41) +        1172 |
+0.00.794.678 I common_memory_breakdown_print: |   - Host               |                   121 =   110 +       2 +       9                |
+0.00.813.707 I common_params_fit_impl: memory for test allocation by device:
+0.00.813.714 I common_params_fit_impl: id=0, n_layer=23, n_part= 0, overflow_type=4, mem=   415 MiB
+0.00.813.784 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=23
+0.00.915.044 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.00.915.049 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 405 =   343 +      21 +      41) +        1182 |
+0.00.915.049 I common_memory_breakdown_print: |   - Host               |                   131 =   119 +       3 +       9                |
+0.00.933.734 I common_params_fit_impl: memory for test allocation by device:
+0.00.933.739 I common_params_fit_impl: id=0, n_layer=22, n_part= 0, overflow_type=4, mem=   405 MiB
+0.00.933.861 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=22
+0.01.036.764 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.01.036.769 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 394 =   333 +      20 +      41) +        1194 |
+0.01.036.770 I common_memory_breakdown_print: |   - Host               |                   142 =   129 +       4 +       9                |
+0.01.055.367 I common_params_fit_impl: memory for test allocation by device:
+0.01.055.372 I common_params_fit_impl: id=0, n_layer=21, n_part= 0, overflow_type=4, mem=   394 MiB
+0.01.055.391 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=21
+0.01.172.982 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.01.172.988 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 384 =   324 +      19 +      41) +        1204 |
+0.01.172.988 I common_memory_breakdown_print: |   - Host               |                   152 =   138 +       5 +       9                |
+0.01.192.262 I common_params_fit_impl: memory for test allocation by device:
+0.01.192.267 I common_params_fit_impl: id=0, n_layer=20, n_part= 0, overflow_type=4, mem=   384 MiB
+0.01.192.269 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=20
+0.01.299.630 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.01.299.636 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 373 =   314 +      18 +      41) +        1214 |
+0.01.299.636 I common_memory_breakdown_print: |   - Host               |                   163 =   148 +       6 +       9                |
+0.01.319.135 I common_params_fit_impl: memory for test allocation by device:
+0.01.319.142 I common_params_fit_impl: id=0, n_layer=19, n_part= 0, overflow_type=4, mem=   373 MiB
+0.01.319.146 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=19
+0.01.429.244 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.01.429.249 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 362 =   304 +      17 +      41) +        1226 |
+0.01.429.249 I common_memory_breakdown_print: |   - Host               |                   174 =   158 +       7 +       9                |
+0.01.448.734 I common_params_fit_impl: memory for test allocation by device:
+0.01.448.739 I common_params_fit_impl: id=0, n_layer=18, n_part= 0, overflow_type=4, mem=   362 MiB
+0.01.448.742 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=18
+0.01.555.548 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.01.555.553 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 351 =   294 +      16 +      41) +        1237 |
+0.01.555.553 I common_memory_breakdown_print: |   - Host               |                   185 =   168 +       8 +       9                |
+0.01.574.950 I common_params_fit_impl: memory for test allocation by device:
+0.01.574.955 I common_params_fit_impl: id=0, n_layer=17, n_part= 0, overflow_type=4, mem=   351 MiB
+0.01.574.960 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=17
+0.01.683.718 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.01.683.723 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 339 =   283 +      15 +      41) +        1248 |
+0.01.683.724 I common_memory_breakdown_print: |   - Host               |                   197 =   179 +       9 +       9                |
+0.01.704.546 I common_params_fit_impl: memory for test allocation by device:
+0.01.704.551 I common_params_fit_impl: id=0, n_layer=16, n_part= 0, overflow_type=4, mem=   339 MiB
+0.01.704.554 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=16
+0.01.808.700 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.01.808.705 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 328 =   273 +      14 +      41) +        1260 |
+0.01.808.706 I common_memory_breakdown_print: |   - Host               |                   208 =   189 +      10 +       9                |
+0.01.828.164 I common_params_fit_impl: memory for test allocation by device:
+0.01.828.171 I common_params_fit_impl: id=0, n_layer=15, n_part= 0, overflow_type=4, mem=   328 MiB
+0.01.828.223 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=15
+0.01.932.858 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.01.932.864 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 316 =   262 +      13 +      41) +        1271 |
+0.01.932.864 I common_memory_breakdown_print: |   - Host               |                   220 =   200 +      11 +       9                |
+0.01.952.370 I common_params_fit_impl: memory for test allocation by device:
+0.01.952.376 I common_params_fit_impl: id=0, n_layer=14, n_part= 0, overflow_type=4, mem=   316 MiB
+0.01.952.378 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=14
+0.02.057.750 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.02.057.755 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 306 =   253 +      12 +      41) +        1281 |
+0.02.057.756 I common_memory_breakdown_print: |   - Host               |                   230 =   209 +      12 +       9                |
+0.02.077.562 I common_params_fit_impl: memory for test allocation by device:
+0.02.077.568 I common_params_fit_impl: id=0, n_layer=13, n_part= 0, overflow_type=4, mem=   306 MiB
+0.02.077.570 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=13
+0.02.182.921 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.02.182.926 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 296 =   244 +      11 +      41) +        1292 |
+0.02.182.927 I common_memory_breakdown_print: |   - Host               |                   240 =   218 +      13 +       9                |
+0.02.202.373 I common_params_fit_impl: memory for test allocation by device:
+0.02.202.379 I common_params_fit_impl: id=0, n_layer=12, n_part= 0, overflow_type=4, mem=   296 MiB
+0.02.202.380 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=12
+0.02.319.805 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.02.319.810 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 284 =   233 +      10 +      41) +        1303 |
+0.02.319.811 I common_memory_breakdown_print: |   - Host               |                   252 =   229 +      14 +       9                |
+0.02.338.377 I common_params_fit_impl: memory for test allocation by device:
+0.02.338.382 I common_params_fit_impl: id=0, n_layer=11, n_part= 0, overflow_type=4, mem=   284 MiB
+0.02.338.384 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=11
+0.02.451.076 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.02.451.081 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 274 =   224 +       9 +      41) +        1313 |
+0.02.451.081 I common_memory_breakdown_print: |   - Host               |                   262 =   238 +      15 +       9                |
+0.02.469.786 I common_params_fit_impl: memory for test allocation by device:
+0.02.469.792 I common_params_fit_impl: id=0, n_layer=10, n_part= 0, overflow_type=4, mem=   274 MiB
+0.02.469.794 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=10
+0.02.582.334 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.02.582.341 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 264 =   215 +       8 +      41) +        1324 |
+0.02.582.341 I common_memory_breakdown_print: |   - Host               |                   272 =   247 +      16 +       9                |
+0.02.601.700 I common_params_fit_impl: memory for test allocation by device:
+0.02.601.708 I common_params_fit_impl: id=0, n_layer= 9, n_part= 0, overflow_type=4, mem=   264 MiB
+0.02.601.711 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=9
+0.02.708.105 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.02.708.110 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 253 =   205 +       7 +      41) +        1335 |
+0.02.708.110 I common_memory_breakdown_print: |   - Host               |                   283 =   257 +      17 +       9                |
+0.02.726.351 I common_params_fit_impl: memory for test allocation by device:
+0.02.726.356 I common_params_fit_impl: id=0, n_layer= 8, n_part= 0, overflow_type=4, mem=   253 MiB
+0.02.726.358 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=8
+0.02.835.369 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.02.835.374 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 242 =   195 +       6 +      41) +        1345 |
+0.02.835.374 I common_memory_breakdown_print: |   - Host               |                   294 =   267 +      18 +       9                |
+0.02.854.482 I common_params_fit_impl: memory for test allocation by device:
+0.02.854.488 I common_params_fit_impl: id=0, n_layer= 7, n_part= 0, overflow_type=4, mem=   242 MiB
+0.02.854.490 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=7
+0.02.959.435 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.02.959.440 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 232 =   186 +       5 +      41) +        1355 |
+0.02.959.440 I common_memory_breakdown_print: |   - Host               |                   304 =   276 +      19 +       9                |
+0.02.978.030 I common_params_fit_impl: memory for test allocation by device:
+0.02.978.036 I common_params_fit_impl: id=0, n_layer= 6, n_part= 0, overflow_type=4, mem=   232 MiB
+0.02.978.041 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=6
+0.03.080.606 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.03.080.611 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 221 =   176 +       4 +      41) +        1367 |
+0.03.080.612 I common_memory_breakdown_print: |   - Host               |                   315 =   286 +      20 +       9                |
+0.03.091.578 I common_params_fit_impl: memory for test allocation by device:
+0.03.091.583 I common_params_fit_impl: id=0, n_layer= 5, n_part= 0, overflow_type=4, mem=   221 MiB
+0.03.091.590 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=5
+0.03.191.160 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.03.191.165 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 210 =   166 +       3 +      41) +        1377 |
+0.03.191.165 I common_memory_breakdown_print: |   - Host               |                   326 =   296 +      21 +       9                |
+0.03.200.931 I common_params_fit_impl: memory for test allocation by device:
+0.03.200.937 I common_params_fit_impl: id=0, n_layer= 4, n_part= 0, overflow_type=4, mem=   210 MiB
+0.03.200.942 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=4
+0.03.302.126 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.03.302.131 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 199 =   156 +       2 +      41) +        1388 |
+0.03.302.132 I common_memory_breakdown_print: |   - Host               |                   337 =   306 +      22 +       9                |
+0.03.315.782 I common_params_fit_impl: memory for test allocation by device:
+0.03.315.786 I common_params_fit_impl: id=0, n_layer= 3, n_part= 0, overflow_type=4, mem=   199 MiB
+0.03.315.803 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=3
+0.03.419.367 I common_memory_breakdown_print: | memory breakdown [MiB] | total    free    self   model   context   compute    unaccounted |
+0.03.419.372 I common_memory_breakdown_print: |   - CUDA0 (RTX 5090)   | 32579 = 30991 + ( 178 =   137 +       0 +      41) +        1409 |
+0.03.419.372 I common_memory_breakdown_print: |   - Host               |                   358 =   325 +      24 +       9                |
+0.03.430.074 I common_params_fit_impl: memory for test allocation by device:
+0.03.430.079 I common_params_fit_impl: id=0, n_layer= 1, n_part= 0, overflow_type=4, mem=   178 MiB
+0.03.430.081 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=1
+0.03.430.082 I common_params_fit_impl:   - CUDA0 (NVIDIA GeForce RTX 5090):  0 layers,     41 MiB used,  30949 MiB free
+0.03.430.088 I common_fit_params: successfully fit params to free device memory
+0.03.430.091 I common_fit_params: fitting params to free memory took 3.24 seconds
+0.03.456.529 I llama_model_loader: loaded meta data with 26 key-value pairs and 291 tensors from models/qwen2.5-0.5b-q4.gguf (version GGUF V3 (latest))
+0.03.456.541 I llama_model_loader: Dumping metadata keys/values. Note: KV overrides do not apply in this output.
+0.03.456.544 I llama_model_loader: - kv   0:                       general.architecture str              = qwen2
+0.03.456.544 I llama_model_loader: - kv   1:                               general.type str              = model
+0.03.456.546 I llama_model_loader: - kv   2:                               general.name str              = qwen2.5-0.5b-instruct
+0.03.456.546 I llama_model_loader: - kv   3:                            general.version str              = v0.1
+0.03.456.547 I llama_model_loader: - kv   4:                           general.finetune str              = qwen2.5-0.5b-instruct
+0.03.456.548 I llama_model_loader: - kv   5:                         general.size_label str              = 630M
+0.03.456.549 I llama_model_loader: - kv   6:                          qwen2.block_count u32              = 24
+0.03.456.549 I llama_model_loader: - kv   7:                       qwen2.context_length u32              = 32768
+0.03.456.550 I llama_model_loader: - kv   8:                     qwen2.embedding_length u32              = 896
+0.03.456.550 I llama_model_loader: - kv   9:                  qwen2.feed_forward_length u32              = 4864
+0.03.456.551 I llama_model_loader: - kv  10:                 qwen2.attention.head_count u32              = 14
+0.03.456.551 I llama_model_loader: - kv  11:              qwen2.attention.head_count_kv u32              = 2
+0.03.456.554 I llama_model_loader: - kv  12:                       qwen2.rope.freq_base f32              = 1000000.000000
+0.03.456.556 I llama_model_loader: - kv  13:     qwen2.attention.layer_norm_rms_epsilon f32              = 0.000001
+0.03.456.557 I llama_model_loader: - kv  14:                          general.file_type u32              = 15
+0.03.456.557 I llama_model_loader: - kv  15:                       tokenizer.ggml.model str              = gpt2
+0.03.456.558 I llama_model_loader: - kv  16:                         tokenizer.ggml.pre str              = qwen2
+0.03.456.561 I llama_model_loader: - kv  17:                      tokenizer.ggml.tokens arr[str,151936]  = ["!", "\"", "#", "$", "%", "&", "'", ...
+0.03.456.564 I llama_model_loader: - kv  18:                  tokenizer.ggml.token_type arr[i32,151936]  = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+0.03.456.566 I llama_model_loader: - kv  19:                      tokenizer.ggml.merges arr[str,151387]  = ["Ġ Ġ", "ĠĠ ĠĠ", "i n", "Ġ t",...
+0.03.456.566 I llama_model_loader: - kv  20:                tokenizer.ggml.eos_token_id u32              = 151645
+0.03.456.567 I llama_model_loader: - kv  21:            tokenizer.ggml.padding_token_id u32              = 151643
+0.03.456.568 I llama_model_loader: - kv  22:                tokenizer.ggml.bos_token_id u32              = 151643
+0.03.456.568 I llama_model_loader: - kv  23:               tokenizer.ggml.add_bos_token bool             = false
+0.03.456.571 I llama_model_loader: - kv  24:                    tokenizer.chat_template str              = {%- if tools %}\n    {{- '<|im_start|>...
+0.03.456.572 I llama_model_loader: - kv  25:               general.quantization_version u32              = 2
+0.03.456.572 I llama_model_loader: - type  f32:  121 tensors
+0.03.456.573 I llama_model_loader: - type q5_0:  133 tensors
+0.03.456.573 I llama_model_loader: - type q8_0:   13 tensors
+0.03.456.574 I llama_model_loader: - type q4_K:   12 tensors
+0.03.456.574 I llama_model_loader: - type q6_K:   12 tensors
+0.03.456.575 I print_info: file format = GGUF V3 (latest)
+0.03.456.576 I print_info: file type   = Q4_K - Medium
+0.03.456.577 I print_info: file size   = 462.96 MiB (6.16 BPW) 
+0.03.456.593 I llama_prepare_model_devices: using device CUDA0 (NVIDIA GeForce RTX 5090) (0000:01:00.0) - 30991 MiB free
+0.03.486.905 I load: 0 unused tokens
+0.03.499.238 W load: control-looking token: 128247 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.03.501.979 I load: printing all EOG tokens:
+0.03.501.987 I load:   - 128247 ('</s>')
+0.03.501.988 I load:   - 151643 ('<|endoftext|>')
+0.03.501.988 I load:   - 151645 ('<|im_end|>')
+0.03.501.989 I load:   - 151662 ('<|fim_pad|>')
+0.03.501.989 I load:   - 151663 ('<|repo_name|>')
+0.03.501.989 I load:   - 151664 ('<|file_sep|>')
+0.03.502.092 I load: special tokens cache size = 23
+0.03.527.165 I load: token to piece cache size = 0.9310 MB
+0.03.527.184 I print_info: arch                  = qwen2
+0.03.527.184 I print_info: vocab_only            = 0
+0.03.527.185 I print_info: no_alloc              = 0
+0.03.527.185 I print_info: n_ctx_train           = 32768
+0.03.527.186 I print_info: n_embd_inp            = 896
+0.03.527.186 I print_info: n_embd                = 896
+0.03.527.187 I print_info: n_embd_out            = 896
+0.03.527.187 I print_info: n_layer               = 24
+0.03.527.188 I print_info: n_layer_all           = 24
+0.03.527.200 I print_info: n_head                = 14
+0.03.527.202 I print_info: n_head_kv             = 2
+0.03.527.203 I print_info: n_rot                 = 64
+0.03.527.203 I print_info: n_swa                 = 0
+0.03.527.203 I print_info: is_swa_any            = 0
+0.03.527.204 I print_info: non_causal_type       = 0
+0.03.527.204 I print_info: n_embd_head_k         = 64
+0.03.527.205 I print_info: n_embd_head_v         = 64
+0.03.527.206 I print_info: n_gqa                 = 7
+0.03.527.208 I print_info: n_embd_k_gqa          = 128
+0.03.527.210 I print_info: n_embd_v_gqa          = 128
+0.03.527.212 I print_info: f_norm_eps            = 0.0e+00
+0.03.527.213 I print_info: f_norm_rms_eps        = 1.0e-06
+0.03.527.213 I print_info: f_clamp_kqv           = 0.0e+00
+0.03.527.214 I print_info: f_max_alibi_bias      = 0.0e+00
+0.03.527.214 I print_info: f_logit_scale         = 0.0e+00
+0.03.527.215 I print_info: f_attn_scale          = 0.0e+00
+0.03.527.215 I print_info: f_attn_value_scale    = 0.0000
+0.03.527.217 I print_info: n_ff                  = 4864
+0.03.527.218 I print_info: n_expert              = 0
+0.03.527.218 I print_info: n_expert_used         = 0
+0.03.527.219 I print_info: n_expert_groups       = 0
+0.03.527.219 I print_info: n_group_used          = 0
+0.03.527.219 I print_info: causal attn           = 1
+0.03.527.220 I print_info: pooling type          = -1
+0.03.527.220 I print_info: rope type             = 2
+0.03.527.221 I print_info: rope scaling          = linear
+0.03.527.222 I print_info: freq_base_train       = 1000000.0
+0.03.527.223 I print_info: freq_scale_train      = 1
+0.03.527.224 I print_info: n_ctx_orig_yarn       = 32768
+0.03.527.224 I print_info: rope_yarn_log_mul     = 0.0000
+0.03.527.225 I print_info: rope_finetuned        = unknown
+0.03.527.225 I print_info: model type            = 1B
+0.03.527.226 I print_info: model params          = 630.17 M
+0.03.527.227 I print_info: general.name          = qwen2.5-0.5b-instruct
+0.03.527.228 I print_info: vocab type            = BPE
+0.03.527.228 I print_info: n_vocab               = 151936
+0.03.527.229 I print_info: n_merges              = 151387
+0.03.527.230 I print_info: BOS token             = 151643 '<|endoftext|>'
+0.03.527.230 I print_info: EOS token             = 151645 '<|im_end|>'
+0.03.527.231 I print_info: EOT token             = 151645 '<|im_end|>'
+0.03.527.231 I print_info: PAD token             = 151643 '<|endoftext|>'
+0.03.527.231 I print_info: LF token              = 198 'Ċ'
+0.03.527.232 I print_info: FIM PRE token         = 151659 '<|fim_prefix|>'
+0.03.527.232 I print_info: FIM SUF token         = 151661 '<|fim_suffix|>'
+0.03.527.233 I print_info: FIM MID token         = 151660 '<|fim_middle|>'
+0.03.527.233 I print_info: FIM PAD token         = 151662 '<|fim_pad|>'
+0.03.527.234 I print_info: FIM REP token         = 151663 '<|repo_name|>'
+0.03.527.234 I print_info: FIM SEP token         = 151664 '<|file_sep|>'
+0.03.527.234 I print_info: EOG token             = 128247 '</s>'
+0.03.527.235 I print_info: EOG token             = 151643 '<|endoftext|>'
+0.03.527.235 I print_info: EOG token             = 151645 '<|im_end|>'
+0.03.527.236 I print_info: EOG token             = 151662 '<|fim_pad|>'
+0.03.527.236 I print_info: EOG token             = 151663 '<|repo_name|>'
+0.03.527.236 I print_info: EOG token             = 151664 '<|file_sep|>'
+0.03.527.237 I print_info: max token length      = 256
+0.03.527.270 I load_tensors: loading model tensors, this can take a while... (load_mode = mmap)
+0.03.565.999 I load_tensors: offloading 0 repeating layers to GPU
+0.03.566.005 I load_tensors: offloaded 0/25 layers to GPU
+0.03.566.008 I load_tensors:   CPU_Mapped model buffer size =   462.96 MiB
+0.03.568.643 I cmn  common_init_: added </s> logit bias = -inf
+0.03.568.755 I cmn  common_init_: added <|endoftext|> logit bias = -inf
+0.03.568.757 I cmn  common_init_: added <|im_end|> logit bias = -inf
+0.03.568.758 I cmn  common_init_: added <|fim_pad|> logit bias = -inf
+0.03.568.759 I cmn  common_init_: added <|repo_name|> logit bias = -inf
+0.03.568.760 I cmn  common_init_: added <|file_sep|> logit bias = -inf
+0.03.568.887 I llama_context: constructing llama_context
+0.03.568.891 I llama_context: n_seq_max             = 4
+0.03.568.891 I llama_context: n_ctx                 = 2048
+0.03.568.892 I llama_context: n_ctx_seq             = 2048
+0.03.568.892 I llama_context: n_batch               = 2048
+0.03.568.892 I llama_context: n_ubatch              = 512
+0.03.568.893 I llama_context: causal_attn           = 1
+0.03.568.893 I llama_context: flash_attn            = auto
+0.03.568.894 I llama_context: kv_unified            = true
+0.03.568.895 I llama_context: freq_base             = 1000000.0
+0.03.568.898 I llama_context: freq_scale            = 1
+0.03.568.898 I llama_context: n_rs_seq              = 0
+0.03.568.899 I llama_context: n_outputs_max         = 4
+0.03.568.899 I llama_context: n_outputs_max_per_seq = 1
+0.03.568.900 I llama_context: n_ctx_seq (2048) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
+0.03.569.202 I llama_context:        CPU  output buffer size =     2.32 MiB
+0.03.569.263 I llama_kv_cache:        CPU KV buffer size =    24.00 MiB
+0.03.571.387 I llama_kv_cache: size =   24.00 MiB (  2048 cells,  24 layers,  4/1 seqs), K (f16):   12.00 MiB, V (f16):   12.00 MiB
+0.03.571.396 I llama_kv_cache: n_rot_k = 0, n_embd_head_k_all = 64
+0.03.571.396 I llama_kv_cache: n_rot_v = 0, n_embd_head_k_all = 64
+0.03.571.403 I sched_reserve: reserving ...
+0.03.572.120 I resolve_fused_ops: Flash Attention enabled
+0.03.572.123 I resolve_fused_ops: resolving fused DeepSeek V4 HC support:
+0.03.572.400 I resolve_fused_ops: fused DeepSeek V4 HC pre enabled
+0.03.572.668 I resolve_fused_ops: fused DeepSeek V4 HC comb enabled
+0.03.572.953 I resolve_fused_ops: fused DeepSeek V4 HC post enabled
+0.03.575.294 I sched_reserve:      CUDA0 compute buffer size =    41.00 MiB
+0.03.575.299 I sched_reserve:  CUDA_Host compute buffer size =     9.02 MiB
+0.03.575.302 I sched_reserve: graph (pp bs=512, tg bs=4): nodes = 825 / 825, splits = 335 / 1, input objects = 4 / 4, input tensors = 9 / 9
+0.03.575.303 I sched_reserve: reserve took 3.90 ms, sched copies = 1
+0.03.575.416 I cmn          init: llama threadpool init, n_threads = 16
+0.03.575.433 I cmn  common_init_: warming up the model with an empty run - please wait ... (--no-warmup to disable)
+0.03.665.804 I srv    load_model: initializing, n_slots = 4, n_ctx_slot = 2048, kv_unified = 'true'
+0.03.665.848 I spec common_specu: no implementations specified for speculative decoding
+0.03.665.851 I slot   load_model: id  0 | task -1 | new slot, n_ctx = 2048
+0.03.665.855 I slot   load_model: id  1 | task -1 | new slot, n_ctx = 2048
+0.03.665.856 I slot   load_model: id  2 | task -1 | new slot, n_ctx = 2048
+0.03.665.856 I slot   load_model: id  3 | task -1 | new slot, n_ctx = 2048
+0.03.665.872 I srv    load_model: prompt cache is enabled, size limit: 8192 MiB
+0.03.665.872 I srv    load_model: use `--cache-ram 0` to disable the prompt cache
+0.03.665.873 I srv    load_model: for more info see http<local-engine-path>
+0.03.665.873 I srv    load_model: context checkpoints enabled, max = 32, min spacing = 8192
+0.03.665.893 I srv          init: idle slots will be saved to prompt cache and cleared upon starting a new task
+0.03.669.931 I srv          init: init: chat template, example_format: '<|im_start|>system
+You are a helpful assistant<|im_end|>
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+0.03.670.050 I srv          init: init: chat template, thinking = 0
+0.03.670.059 I srv          init: preserve_reasoning kwarg: not supported by template
+0.03.670.076 I srv  llama_server: model loaded
+0.03.670.078 I srv  llama_server: listening on htt<local-engine-path>
+0.03.670.141 I srv  update_slots: all slots are idle

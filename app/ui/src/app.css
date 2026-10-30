@@ -1,0 +1,332 @@
+/*
+  Design tokens and base styles for the settings window.
+
+  Direction: a native-feeling Windows utility. Cool slate paper, ink text,
+  hairline structure, and six signal colours that always travel with words
+  (state is never colour alone). Dark theme follows the system setting.
+*/
+
+:root {
+  --paper: #eef1f4;
+  --surface: #ffffff;
+  --surface-2: #f6f8fa;
+  --ink: #1d2433;
+  --ink-2: #4b5667;
+  --ink-3: #6b7686;
+  --line: #d5dae1;
+  --line-strong: #b9c1cc;
+  --accent: #2f6fed;
+  --accent-ink: #ffffff;
+  --accent-soft: #e4ecfd;
+
+  --open: #1f9d6b;
+  --busy: #2f6fed;
+  --drain: #b8860b;
+  --closed: #d64545;
+  --held: #7c4ddb;
+  --paused: #6b7686;
+  --danger: #c0392b;
+  --warn-bg: #fff6dd;
+  --warn-ink: #6f5200;
+  --err-bg: #fde8e6;
+  --err-ink: #8a1f14;
+
+  --radius: 6px;
+  --font: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Segoe UI Variable Display", "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+  --mono: "Cascadia Mono", "Cascadia Code", Consolas, ui-monospace, monospace;
+  color-scheme: light;
+}
+
+/* Dark palette: when Windows is dark and the user has not forced light... */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --paper: #12161d;
+    --surface: #1a2029;
+    --surface-2: #151a22;
+    --ink: #e6eaf0;
+    --ink-2: #b4bdc9;
+    --ink-3: #8d97a5;
+    --line: #2a3340;
+    --line-strong: #3a4656;
+    --accent: #6c9bff;
+    --accent-ink: #0d1626;
+    --accent-soft: #1b2a47;
+    --open: #3ecf97;
+    --busy: #6c9bff;
+    --drain: #e5b53d;
+    --closed: #ff6b6b;
+    --held: #a78bfa;
+    --paused: #8d97a5;
+    --danger: #ff7a6b;
+    --warn-bg: #3a3012;
+    --warn-ink: #f1d98a;
+    --err-bg: #3d1c1a;
+    --err-ink: #ffb4aa;
+    color-scheme: dark;
+  }
+}
+
+/* ...or when the user chose dark in settings. */
+:root[data-theme='dark'] {
+  --paper: #12161d;
+  --surface: #1a2029;
+  --surface-2: #151a22;
+  --ink: #e6eaf0;
+  --ink-2: #b4bdc9;
+  --ink-3: #8d97a5;
+  --line: #2a3340;
+  --line-strong: #3a4656;
+  --accent: #6c9bff;
+  --accent-ink: #0d1626;
+  --accent-soft: #1b2a47;
+  --open: #3ecf97;
+  --busy: #6c9bff;
+  --drain: #e5b53d;
+  --closed: #ff6b6b;
+  --held: #a78bfa;
+  --paused: #8d97a5;
+  --danger: #ff7a6b;
+  --warn-bg: #3a3012;
+  --warn-ink: #f1d98a;
+  --err-bg: #3d1c1a;
+  --err-ink: #ffb4aa;
+  color-scheme: dark;
+}
+
+/* And light when the user forces it, regardless of Windows. */
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font: 14px/1.5 var(--font);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+h1 {
+  font-size: 20px;
+  line-height: 1.25;
+}
+h2 {
+  font-size: 15px;
+}
+h3 {
+  font-size: 14px;
+}
+p {
+  margin: 0;
+}
+.muted {
+  color: var(--ink-3);
+}
+.mono {
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+/* Keyboard focus is always visible. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* ---------- buttons ---------- */
+button {
+  font: inherit;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  padding: 5px 14px;
+  min-height: 32px;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+}
+button:hover:not(:disabled) {
+  background: var(--surface-2);
+  border-color: var(--ink-3);
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+button.primary:hover:not(:disabled) {
+  filter: brightness(1.08);
+  background: var(--accent);
+}
+button.danger {
+  color: var(--danger);
+  border-color: color-mix(in srgb, var(--danger) 45%, var(--line));
+}
+button.quiet {
+  border-color: transparent;
+  background: transparent;
+  color: var(--ink-2);
+  padding: 3px 8px;
+}
+button.quiet:hover:not(:disabled) {
+  background: var(--accent-soft);
+  border-color: transparent;
+  color: var(--ink);
+}
+button.small {
+  padding: 3px 12px;
+  min-height: 28px;
+  font-size: 13px;
+}
+
+/* ---------- form controls ---------- */
+input[type="text"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+select,
+textarea {
+  font: inherit;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  padding: 5px 9px;
+  min-height: 32px;
+  min-width: 0;
+}
+input.mono,
+textarea.mono {
+  font-family: var(--mono);
+  font-size: 12px;
+}
+input:disabled,
+select:disabled,
+textarea:disabled {
+  background: var(--surface-2);
+  color: var(--ink-3);
+}
+input[aria-invalid="true"],
+select[aria-invalid="true"] {
+  border-color: var(--closed);
+  background: color-mix(in srgb, var(--closed) 7%, var(--surface));
+}
+
+/* ---------- layout helpers ---------- */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.stack-sm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.spread {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+
+/* A section is a heading over hairline-divided content, not a card. */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.section > h2 {
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 4px;
+}
+.section-note {
+  color: var(--ink-3);
+  max-width: 70ch;
+}
+
+/* Rows separated by hairlines. */
+.list > * + * {
+  border-top: 1px solid var(--line);
+}
+.list-row {
+  padding: 10px 0;
+}
+
+/* ---------- messages ---------- */
+.notice {
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+.notice.warn {
+  background: var(--warn-bg);
+  color: var(--warn-ink);
+  border-color: color-mix(in srgb, var(--warn-ink) 25%, transparent);
+}
+.notice.error {
+  background: var(--err-bg);
+  color: var(--err-ink);
+  border-color: color-mix(in srgb, var(--err-ink) 25%, transparent);
+}
+.field-error {
+  color: var(--closed);
+  font-size: 12px;
+}
+.field-warning {
+  color: var(--drain);
+  font-size: 12px;
+}
+.field-note {
+  color: var(--ink-2);
+  font-size: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

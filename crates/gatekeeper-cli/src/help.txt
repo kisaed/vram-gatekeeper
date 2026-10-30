@@ -1,0 +1,18 @@
+gatekeeper-cli - headless VRAM Gatekeeper
+
+USAGE
+  gatekeeper-cli [OPTIONS] [COMMAND]
+
+COMMANDS
+  run        Start the gatekeeper (default). Stop with Ctrl+C.
+  schema     Write config.schema.json next to config.json and exit.
+  catalog    Print the llama-server parameter catalog as JSON and exit.
+  paths      Print where config, state and logs live.
+  help       Show this text.
+
+OPTIONS
+  --config-dir DIR   Folder holding config.json  (default: %APPDATA%\VRAM Gatekeeper)
+  --data-dir DIR     Folder for state and logs   (default: %LOCALAPPDATA%\VRAM Gatekeeper)
+  --engine-dir DIR   llama.cpp folder to use when config.json has no engine set
+
+Set RUST_LOG=debug for more detail.
