@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- First installer release (v0.1.0 pre-release), published as a GitHub release asset; README gains install instructions.
 - Public source alpha: AI-assistance disclosure, architecture diagrams, source-build instructions, MIT license, source checks, and explicit remaining manual-validation work.
 - AI-assisted prepublication hardening: reject unapproved, malformed, and duplicate browser Origin headers before dispatch; preserve native clients and configured trusted origins. Regression tests cover rejected requests without state mutation.
 - Speculative decoding (separate draft model, EAGLE-3, DFlash, DSpark, Multi-Token Prediction and n-gram types): a Speculative Decoding tab on each model, a `files.draft` setting, findings before a model loads, memory accounting, a Test Load report of which types started, and Hugging Face support (draft sidecar files, Add as a Draft Model, Find Draft Models).

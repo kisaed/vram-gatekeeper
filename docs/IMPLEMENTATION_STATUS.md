@@ -6,7 +6,7 @@ Legend: ✅ done and tested · 🟡 partial · ⬜ not started · 🔧 needs rea
 
 ## Environment
 - Rust 1.99.1 + MSVC installed by the owner (build-time only; ADR-0011).
-- The repo lives on a network drive (Z:), which Windows refuses to execute build output from. **Set `CARGO_TARGET_DIR` to a local folder**, e.g. `C:/Users/<you>/cargo-target/vram-gatekeeper`.
+- Windows refuses to execute build output from a network drive. If the repo lives on one, **set `CARGO_TARGET_DIR` to a local folder**, e.g. `C:/Users/<you>/cargo-target/vram-gatekeeper`.
 - Bundled dependencies (llama.cpp, cudart, WebView2 bootstrapper): NFR-7. `tools/fetch-engine.ps1` downloads the pinned, checksummed engines; the per-user NSIS installer packs both engines and embeds the WebView2 bootstrapper (done). Installers are built with `tools/build.ps1` into `builds/<version>-build.<NNNN>/` (spec §25.4.1). The clean-machine acceptance run is still to do (see NFR-7 below).
 - UI: `pwsh tools/ui.ps1 check|lint|build` (mirrors to a local folder when the repo is on a network drive).
 
