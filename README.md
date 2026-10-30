@@ -1,16 +1,18 @@
 # VRAM Gatekeeper
 
-**Give your game the GPU back without manually babysitting a local LLM server.**
+**GPU-memory coordination for local LLMs and games on Windows.**
 
 A Windows background application between AI clients and [llama.cpp](https://github.com/ggml-org/llama.cpp). It coordinates model loading, request admission, and GPU-memory pressure. When a configured game or pressure condition closes the gate, it can drain requests and unload managed models, then reload on demand afterward.
 
 **Experimental alpha; source distribution.** No installer release is included. Hardware/game compatibility remains under validation. This is an independent project, not an official llama.cpp, NVIDIA, or game-platform product.
 
-## Why it exists
+[Features](#features) · [Architecture](#architecture) · [Build from source](#build-from-source) · [Validation](#validation-status) · [License](#license)
+
+## Purpose
 
 A local LLM and a game compete for dedicated GPU memory. Closing the chat window does not necessarily unload the model. Gatekeeper provides one place to manage model lifetime, explain why inference is unavailable, and restore service afterward. It manages its own `llama-server` child processes; it cannot promise to free memory allocated by unrelated programs or manage every LLM application.
 
-## Features in the source
+## Features
 
 - Local proxy for supported OpenAI-style and Anthropic-style llama.cpp requests, including streaming/cancellation.
 - Per-model supervision, on-demand loading, idle unloading, and configurable request-drain policies.
@@ -20,11 +22,11 @@ A local LLM and a game compete for dedicated GPU memory. Closing the chat window
 - CUDA/Vulkan engine selection and official llama.cpp engine updates with checksum verification.
 - Fake-server, fixture, property, unit, and opt-in real-engine tests.
 
-Implementation does not imply every feature has passed real-hardware acceptance testing.
+Hardware acceptance coverage is tracked in the [manual test matrix](docs/testing/manual-test-matrix.md).
 
-## AI assistance and ownership
+## AI-assisted development
 
-Most implementation was generated with AI assistance. Kevin has used and manually tested the application daily and reports that it works on his current setup, but has not extensively reviewed the entire codebase. This project is shared for inspection, improvement, and testing. It is not presented as hand-written code or a comprehensively audited application.
+Most of the implementation was generated with AI assistance. The application has been used and manually tested daily on one development setup; a comprehensive review of the generated code has not been completed. The [validation record](docs/PUBLICATION_CHECKS.md) identifies the automated checks performed and the acceptance work that remains.
 
 Design/status documents and captured test output record development history; they are not a substitute for independently rerunning tests. Contributions that simplify the implementation, improve correctness, and reproduce real hardware/game behavior are especially welcome.
 
@@ -60,7 +62,7 @@ stateDiagram-v2
 
 This diagram simplifies error recovery, manual holds, and per-model policies. See the [design](docs/spec.md) and [architecture decisions](docs/adr/).
 
-## Build and try it
+## Build from source
 
 A **local Windows x64 checkout** is simplest. Prerequisites: a working GPU driver, Rust stable/MSVC target, Visual Studio C++ Build Tools and Windows SDK, Node.js, PowerShell 7, and WebView2 for the desktop UI. Backend compatibility depends on the selected upstream llama.cpp build.
 
@@ -103,7 +105,7 @@ Daily use is one setup's experience, not a compatibility guarantee. [Historical 
 - AMD/Intel Vulkan hardware, multi-model contention, sleep/resume, and second-machine LAN behavior.
 - Clean-account installation/uninstallation and the full 24-hour soak.
 
-Real-engine/live-network tests are opt-in and may skip without their environment variables. A green command alone does not prove those scenarios ran.
+Real-engine and live-network tests are opt-in and may skip when their environment variables are unavailable. Review the test summary before interpreting a run as hardware or network validation.
 
 Checks that do not load a model:
 

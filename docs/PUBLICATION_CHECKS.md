@@ -23,6 +23,6 @@ AI-assisted hardening now rejects disallowed, malformed, or duplicated browser O
 - Excludes installed settings, credentials, models, engines/runtime binaries, installers/build outputs, `node_modules`, private AI planning notes, and generated Tauri schemas/permission files.
 - Retains historical captured output only as parser fixtures; absolute machine paths in those fixture logs were redacted and the fixture README records that change.
 - A limited common-token/private-key and personal-path scan found no matches in the reviewed source copy. This is not a comprehensive secret or security audit.
-- AI-generated implementation and Kevin's reported daily use/manual testing are disclosed in the README.
+- AI-generated implementation and the scope of reported daily use/manual testing are disclosed in the README.
 
 Desktop builds/packaging, clean-account installation/uninstallation, real games, real GPU-memory pressure, AMD/Intel hardware, sleep/resume, second-machine LAN use, and the 24-hour soak remain separate acceptance work. See the manual test matrix; historical development notes are explicitly labeled as historical.
